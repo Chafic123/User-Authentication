@@ -1,0 +1,7 @@
+package com.Authent.Controller;
+
+
+@RestController
+public class UserController {
+
+}

@@ -1,0 +1,43 @@
+package com.Authent.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.Authent.Repository.UserRepo;
+import com.Authent.model.Userr;
+
+import java.util.*;
+
+@Service
+public class UserService {
+
+	
+	@Autowired
+	UserRepo userRepo;
+	
+	 @Autowired
+	    private BCryptPasswordEncoder passwordEncoder;
+
+	    // Sign up logic
+	    public Userr signUp(Userr user) throws Exception {
+	        if (userRepo.existsByEmail(user.getEmail())) {
+	            throw new Exception("Email already in use");
+	        }
+
+	        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+	        return userRepo.save(user);
+	    }
+
+	    // Login logic
+	    public boolean login(String email, String password) {
+	        Userr user = userRepo.findByEmail(email);
+
+	        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+	            return false; // Invalid credentials
+	        }
+
+	        return true; // Successfully authenticated
+	    }
+	
+}

@@ -1,0 +1,9 @@
+package com.Authent.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.Authent.model.Userr;
+
+public interface UserRepo extends JpaRepository<Userr,Long> {
+
+}
